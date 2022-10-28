@@ -1,5 +1,6 @@
 var moodForm = document.getElementById("mood-form");
 var moodButton = document.getElementById("mood-button");
+var savedContentList = document.getElementById("saved-content");
 var videoList = document.getElementById("video-list");
 var songList = document.getElementById("song-list");
 var movieList = document.getElementById("movie-list");
@@ -58,14 +59,6 @@ moodForm.addEventListener("submit", (event) => {
   arrayYTVideoIds = [];
 });
 
-var savedList = (text) => {
-  var savedLi = document.createElement("li");
-  cityLi.innerHTML = text;
-  savedList.appendChild(savedLi);
-  // savedLi.addEventListener('click', function () {
-  //     getYoutubeContent(this.textContent);
-  // })
-};
 
 function getYoutubeContent(value) {
   var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
@@ -84,15 +77,42 @@ function getYoutubeContent(value) {
       arrayYTVideoIds = [...arrayYTVideoIds].sort(() => 0.5 - Math.random());
       console.log("arrayYTVideoIds", arrayYTVideoIds);
       player.loadPlaylist(arrayYTVideoIds);
-      var currentVideoId = arrayYTVideoIds[0];
-      savedContent.push(currentVideoId);
-      console.log(savedContent);
-      localStorage.setItem("saved-content", JSON.stringify(savedContent));
+      localStorage.setItem("saved-content", JSON.stringify(arrayYTVideoIds));
       var example = localStorage.getItem("saved-content");
-      example = JSON.parse(example);
       console.log(example);
+      var savedContent = (text) => {
+        var savedButton = document.createElement("button");
+        savedButton.setAttribute("data-playlist", text);
+        savedButton.innerHTML = "Last Playlist";
+        savedContentList.appendChild(savedButton);
+        savedButton.addEventListener('click', function () {
+            getYoutubeContent2(this.getAttribute("data-playlist"));
+            console.log(savedButton);
+        })
+    };
+    savedContent(example);
     });
 };
+
+function getYoutubeContent2(value) {
+    var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
+    fetch(queryUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        getFeelsResultYT = data;
+        for (var i = 0; i < getFeelsResultYT.items.length; i++) { 
+          var vid = getFeelsResultYT.items[i]; 
+          console.log("vidID:", vid.id.videoId);
+          arrayYTVideoIds.push(vid.id.videoId);
+        }
+        console.log("arrayYTVideoIds", arrayYTVideoIds);
+        player.loadPlaylist(arrayYTVideoIds);
+      });
+  };
+
 
 //Youtube API player code
 var tag = document.createElement('script');
@@ -100,21 +120,6 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// var player;
-// function onYouTubeIframeAPIReady() {
-//   player = new YT.Player('player', {
-//     height: '390',
-//     width: '640',
-//     videoId: 'DW3tI9HCslo',
-//     playerVars: {
-//       'playsinline': 1
-//     },
-//     events: {
-//       'onReady': onPlayerReady,
-//       'onStateChange': onPlayerStateChange
-//     }
-//   });
-// }
 
 function onPlayerReady(event) {
     event.target.playVideo();
