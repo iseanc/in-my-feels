@@ -13,6 +13,8 @@ var ytSearchType = "video";
 var getFeelsResultYT;
 var arrayYTVideoIds = [];
 
+var savedContent = [];
+
 moodForm.addEventListener("submit", (event) => {
   var moodSelection = document.getElementById("mood-selections");
   var value = moodSelection.value;
@@ -41,6 +43,54 @@ function getYoutubeContent(value) {
       arrayYTVideoIds = [...arrayYTVideoIds].sort(() => 0.5 - Math.random());
       console.log("arrayYTVideoIds", arrayYTVideoIds);
       player.loadPlaylist(arrayYTVideoIds);
+    });
+};
+
+moodForm.addEventListener("submit", (event) => {
+  var moodSelection = document.getElementById("mood-selections");
+  var value = moodSelection.value;
+  var text = moodSelection.options[moodSelection.selectedIndex].text;
+  console.log("hello");
+  console.log(value);
+  console.log(text);
+  event.preventDefault();
+  getYoutubeContent(value);
+  arrayYTVideoIds = [];
+});
+
+var savedList = (text) => {
+  var savedLi = document.createElement("li");
+  cityLi.innerHTML = text;
+  savedList.appendChild(savedLi);
+  // savedLi.addEventListener('click', function () {
+  //     getYoutubeContent(this.textContent);
+  // })
+};
+
+function getYoutubeContent(value) {
+  var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
+  fetch(queryUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      getFeelsResultYT = data;
+      for (var i = 0; i < getFeelsResultYT.items.length; i++) { 
+        var vid = getFeelsResultYT.items[i]; 
+        console.log("vidID:", vid.id.videoId);
+        arrayYTVideoIds.push(vid.id.videoId);
+      }
+      arrayYTVideoIds = [...arrayYTVideoIds].sort(() => 0.5 - Math.random());
+      console.log("arrayYTVideoIds", arrayYTVideoIds);
+      player.loadPlaylist(arrayYTVideoIds);
+      var currentVideoId = arrayYTVideoIds[0];
+      savedContent.push(currentVideoId);
+      console.log(savedContent);
+      localStorage.setItem("saved-content", JSON.stringify(savedContent));
+      var example = localStorage.getItem("saved-content");
+      example = JSON.parse(example);
+      console.log(example);
     });
 };
 
@@ -95,3 +145,4 @@ function onPlayerReady(event) {
     });
   }
 //End of youtube API code
+
