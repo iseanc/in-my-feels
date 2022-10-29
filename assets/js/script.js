@@ -16,6 +16,41 @@ var arrayYTVideoIds = [];
 
 var savedContent = [];
 
+// ***** BEGIN: THIS SECTION IS DUPLICATE OF CODE DEFINED AGAIN BELOW
+// gets the selected mood value and executes content search (video)
+// moodForm.addEventListener("submit", (event) => {
+//   var moodSelection = document.getElementById("mood-selections");
+//   var value = moodSelection.value;
+//   var text = moodSelection.options[moodSelection.selectedIndex].text;
+//   console.log("hello");
+//   console.log(value);
+//   console.log(text);
+//   event.preventDefault();
+//   getYoutubeContent(value);
+// });
+
+//fetch search content from YouTube.
+// function getYoutubeContent(value) {
+//   var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
+//   fetch(queryUrl)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       console.log(data);
+//       getFeelsResultYT = data;
+//       for (var i = 0; i < getFeelsResultYT.items.length; i++) { 
+//         var vid = getFeelsResultYT.items[i]; 
+//         console.log("vidID:", vid.id.videoId);
+//         arrayYTVideoIds.push(vid.id.videoId);
+//       }
+//       arrayYTVideoIds = [...arrayYTVideoIds].sort(() => 0.5 - Math.random());
+//       console.log("arrayYTVideoIds", arrayYTVideoIds);
+//       player.loadPlaylist(arrayYTVideoIds);
+//     });
+// };
+// ***** END: THIS SECTION IS DUPLICATE OF CODE DEFINED AGAIN BELOW
+
 // gets the selected mood value and executes content search (video)
 moodForm.addEventListener("submit", (event) => {
   var moodSelection = document.getElementById("mood-selections");
@@ -25,40 +60,12 @@ moodForm.addEventListener("submit", (event) => {
   console.log(value);
   console.log(text);
   event.preventDefault();
-  getYoutubeContent(value);
-});
-
-//fetch search content from YouTube.
-function getYoutubeContent(value) {
-  var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
-  fetch(queryUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data);
-      getFeelsResultYT = data;
-      for (var i = 0; i < getFeelsResultYT.items.length; i++) { 
-        var vid = getFeelsResultYT.items[i]; 
-        console.log("vidID:", vid.id.videoId);
-        arrayYTVideoIds.push(vid.id.videoId);
-      }
-      arrayYTVideoIds = [...arrayYTVideoIds].sort(() => 0.5 - Math.random());
-      console.log("arrayYTVideoIds", arrayYTVideoIds);
-      player.loadPlaylist(arrayYTVideoIds);
-    });
-};
-
-moodForm.addEventListener("submit", (event) => {
-  var moodSelection = document.getElementById("mood-selections");
-  var value = moodSelection.value;
-  var text = moodSelection.options[moodSelection.selectedIndex].text;
-  console.log("hello");
-  console.log(value);
-  console.log(text);
-  event.preventDefault();
+  // fetch YouTube content
   getYoutubeContent(value);
   arrayYTVideoIds = [];
+
+  // fetch Mixcloud content
+  getMixcloudContent(value)
 });
 
 // fetch content from youtube
@@ -130,7 +137,7 @@ function onPlayerReady(event) {
 var done = false;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
+    setTimeout(stopVideo, 1000);
     done = true;
   }
 }
@@ -170,15 +177,9 @@ var arrayMixcloudKeys = [];
 // add FEED (Key = /user/mix) from KEY value
 var mixcloudPlayUrl ="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed="
 
-var moodButton = document.getElementById("mood-button");
+
 var mixcloudButtonEl = document.getElementById("mx-next-button");
 
-//event listener
-moodButton.addEventListener("click", (event) => {
-  var value = "angry";
-  event.preventDefault();
-  getMixcloudContent(value);
-});
 
 mixcloudButtonEl.addEventListener("click", (event) => {
   loadMixcloudSelection(arrayMixcloudKeys);
@@ -186,8 +187,8 @@ mixcloudButtonEl.addEventListener("click", (event) => {
 
 // mixcloud web fetch
 function getMixcloudContent(value) {
-
-  var queryUrl = `https://api.mixcloud.com/discover/${value}-music/latest/`;
+  console.log("mixcloud VALUE passed:", value)
+  var queryUrl = `https://api.mixcloud.com/discover/${value}/latest/`;
 
   fetch(queryUrl)
     .then(function (response) {
@@ -212,7 +213,7 @@ function getMixcloudContent(value) {
       // player.loadPlaylist(arrayYTVideoIds);
 
       // load new Mixcloud selection
-      // loadMixcloudSelection
+      loadMixcloudSelection(arrayMixcloudKeys)
     });
 };
 
