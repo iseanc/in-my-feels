@@ -37,9 +37,9 @@
                     <label for="mood-selection">Enter your current mood:</label>
                     <select class="u-full-width" id="mood-selections">
                       <option value=""></option>
-                      <option value="happy music">Happy</option>
-                      <option value="sad music">Sad</option>
-                      <option value="angry music">Angry</option>
+                      <option value="happy-music">Happy</option>
+                      <option value="sad-music">Sad</option>
+                      <option value="angry-music">Angry</option>
                     </select>
                   </div>
                 <div>
@@ -56,7 +56,10 @@
             </div>
             <div>
                 <h2>Songs</h2>
-                <ul id="song-list"></ul>
+                <div id="mixcloud-player">
+                    <button class="button-primary" type="submit" id="mx-next-button" value="next-track">Get Next Track</button>
+                    <iframe id="mx-iframe" width="100%" height="75" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=" frameborder="0" ></iframe>
+                </div>
             </div>
             <div>
                 <h2>Movies</h2>

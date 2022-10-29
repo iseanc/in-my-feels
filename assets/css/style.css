@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,600,800&display=swap");
+html {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#mixcloud-player {
+  /* position: absolute; */
+  z-index: 10;
+  top: 6%;
+  bottom: 2%;
+  left: auto;
+  right: 2%;
+  width: 96%;
+  max-width: 400px;
+  min-height: 200px;
+  margin: 0;
+  margin-bottom: 2%;
+  padding: 0;
+  background-color: #4B25FB;
+  background-image: linear-gradient(to left bottom, #051937, #133961, #1c5d8e, #1d85bd, #12afeb);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+#mixcloud-player iframe {
+  background-color: #2b2b2b;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  /*border: solid 1px #222;*/
+}
+
+@media (max-width: 500px) {
+  body {
+    background-size: 250%;
+    background-position: 23% 0px;
+  }
+
+	#mixcloud-player {
+	  margin-top: 95%;
+	}
+}
