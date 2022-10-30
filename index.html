@@ -14,15 +14,15 @@
 
 <body>
     <header>
-        <nav>
-            <ul>
-                <li>About</li>
+       <!-- <nav class="container"> -->
+            <!--<ul class="row">-->
+                <!--<li class="four columns">About</li>-->
                 <!--will need <a href="tag"></a>-->
-                <li>Categories</li>
-                <li>Contact</li>
-            </ul>
-        </nav>
-        <h1>IN MY FEELS</h1>
+                <!--<li class="four columns">Categories</li>-->
+                <!--<li class="four columns">Contact</li>-->
+            <!--</ul>-->
+        <!--</nav> -->
+        <h1>GET IN YOUR FEELS</h1>
         <h2>Content for your mood</h2>
     </header>
 
@@ -33,8 +33,8 @@
                 <!-- <div>
                     <input id="current-mood" type="text" name="text" placeholder="Enter mood" />
                 </div> -->
-                <div>
-                    <label for="mood-selection">Enter your current mood:</label>
+                <div id="dropdown">
+                    <label id="mood-selection-title" for="mood-selection">Select your mood:</label>
                     <select class="u-full-width" id="mood-selections">
                       <option value=""></option>
                       <option value="happy-music">Happy</option>
@@ -42,12 +42,14 @@
                       <option value="angry-music">Angry</option>
                     </select>
                   </div>
-                <div>
+                <div id="mood-button-position">
                     <button class="button-primary" type="submit" id="mood-button" value="button input">Get in your
                         feels</button>
                 </div>
             </form>
-            <div id="saved-content">Saved content:</div>
+            <div id="saved-content">
+                <h3>Saved content:</h3>
+            </div>
         </div>
         <div>
             <div>

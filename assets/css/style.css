@@ -1,3 +1,48 @@
+* {
+  font-family: 'Gemunu Libre', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-top: 150px;
+  font-size: 100px;
+  font-style: bold;
+}
+
+h2 {
+  text-align: center;
+}
+
+#saved-content {
+  padding-left: 100px;
+}
+
+#dropdown {
+  padding-left: 400px;
+  padding-right: 400px;
+}
+
+#mood-button-position {
+  text-align: center;
+}
+
+.row {
+  list-style: none;
+  text-align: center;
+}
+
+#mood-selection-title {
+  text-align: center;
+}
+
+#player {
+  margin-left: 50vw;
+  transform: translate(-50%);
+}
+
+/*player styling*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat:200,600,800&display=swap");
 html {
   box-sizing: border-box;
@@ -25,6 +70,8 @@ html {
   border-radius: 6px;
   box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.5);
   text-align: center;
+  margin-left: 50vw;
+  transform: translate(-50%);
 }
 #mixcloud-player iframe {
   background-color: #2b2b2b;
