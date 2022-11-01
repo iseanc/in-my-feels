@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--below is where the Skeleton style sheet is linked-->
     <link rel="stylesheet" href="./assets/skeleton/normalize.css">
     <link rel="stylesheet" href="./assets/skeleton/skeleton.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,58 +15,52 @@
 
 <body>
     <header>
-       <!-- <nav class="container"> -->
-            <!--<ul class="row">-->
-                <!--<li class="four columns">About</li>-->
-                <!--will need <a href="tag"></a>-->
-                <!--<li class="four columns">Categories</li>-->
-                <!--<li class="four columns">Contact</li>-->
-            <!--</ul>-->
-        <!--</nav> -->
         <h1>GET IN YOUR FEELS</h1>
-        <h2>Content for your mood</h2>
+        <h2>Songs for your mood</h2>
     </header>
 
     <main>
         <div>
+            <!--see below consists of the dropdown menu for mood selection-->
             <form id="mood-form">
-                <!-- <label>Enter your current mood: </label> -->
-                <!-- <div>
-                    <input id="current-mood" type="text" name="text" placeholder="Enter mood" />
-                </div> -->
                 <div id="dropdown">
                     <label id="mood-selection-title" for="mood-selection">Select your mood:</label>
                     <select class="u-full-width" id="mood-selections">
-                      <option value=""></option>
-                      <option value="happy-music">Happy</option>
-                      <option value="sad-music">Sad</option>
-                      <option value="angry-music">Angry</option>
+                        <!--the value is what gets pushed to the APIs to search relevant content-->
+                        <option value=""></option>
+                        <!--each value acts as the keyword search for the APIs-->
+                        <option value="happy-music">Happy</option>
+                        <option value="sad-music">Sad</option>
+                        <option value="angry-music">Angry</option>
                     </select>
-                  </div>
+                </div>
                 <div id="mood-button-position">
                     <button class="button-primary" type="submit" id="mood-button" value="button input">Get in your
                         feels</button>
                 </div>
             </form>
-            <div id="saved-content">
-                <h3>Saved content:</h3>
+            <!--this is where each Youtube playlist is saved to local storage-->
+            <div id="content-position" id="saved-content">
+                <h3 class="content">Saved content:</h3>
+                <button id="vid-history-button">Last Playlist</button>
             </div>
         </div>
         <div>
             <div>
-                <h2>Video Content</h2>
+                <!--this is where the Youtube playlists populate-->
+                <h2>Youtube Song Playlist</h2>
                 <ul id="player" id="video-list"></ul>
             </div>
             <div>
-                <h2>Songs</h2>
+                <!--this is where the MixCloud playlist will populate-->
+                <h2>MixCloud Song Playlist</h2>
                 <div id="mixcloud-player">
-                    <button class="button-primary" type="submit" id="mx-next-button" value="next-track">Get Next Track</button>
-                    <iframe id="mx-iframe" width="100%" height="75" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=" frameborder="0" ></iframe>
+                    <button class="button-primary" type="submit" id="mx-next-button" value="next-track">Get Next
+                        Track</button>
+                    <iframe id="mx-iframe" width="100%" height="75"
+                        src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed="
+                        frameborder="0"></iframe>
                 </div>
-            </div>
-            <div>
-                <h2>Movies</h2>
-                <ul id="movie-list"></ul>
             </div>
         </div>
     </main>

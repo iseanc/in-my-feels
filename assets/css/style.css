@@ -13,10 +13,21 @@ h1 {
 
 h2 {
   text-align: center;
+  padding-top: 50px;
 }
 
-#saved-content {
-  padding-left: 100px;
+.content {
+  text-align: center;
+}
+
+#vid-history-button {
+  text-align: center;
+}
+
+#content-position {
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 #dropdown {
@@ -44,6 +55,7 @@ h2 {
 
 /*player styling*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat:200,600,800&display=swap");
+
 html {
   box-sizing: border-box;
   height: 100%;
@@ -73,6 +85,7 @@ html {
   margin-left: 50vw;
   transform: translate(-50%);
 }
+
 #mixcloud-player iframe {
   background-color: #2b2b2b;
   border-top-left-radius: 6px;
@@ -86,7 +99,7 @@ html {
     background-position: 23% 0px;
   }
 
-	#mixcloud-player {
-	  margin-top: 95%;
-	}
+  #mixcloud-player {
+    margin-top: 95%;
+  }
 }

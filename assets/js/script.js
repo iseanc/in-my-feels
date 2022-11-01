@@ -1,5 +1,8 @@
 var moodForm = document.getElementById("mood-form");
+
 var moodButton = document.getElementById("mood-button");
+var savedButton = document.getElementById("vid-history-button");
+
 var savedContentList = document.getElementById("saved-content");
 var videoList = document.getElementById("video-list");
 var songList = document.getElementById("song-list");
@@ -21,16 +24,14 @@ moodForm.addEventListener("submit", (event) => {
     var moodSelection = document.getElementById("mood-selections");
     var value = moodSelection.value;
     var text = moodSelection.options[moodSelection.selectedIndex].text;
-    console.log("hello");
-    console.log(value);
-    console.log(text);
+
     event.preventDefault();
     // fetch YouTube content
     getYoutubeContent(value);
     arrayYTVideoIds = [];
 
     // fetch Mixcloud content
-    getMixcloudContent(value)
+    getMixcloudContent(value);
 });
 
 // fetch content from youtube
@@ -41,54 +42,66 @@ function getYoutubeContent(value) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             getFeelsResultYT = data;
             for (var i = 0; i < getFeelsResultYT.items.length; i++) {
                 var vid = getFeelsResultYT.items[i];
-                console.log("vidID:", vid.id.videoId);
                 arrayYTVideoIds.push(vid.id.videoId);
             }
             arrayYTVideoIds = [...arrayYTVideoIds].sort(() => 0.5 - Math.random());
-            console.log("arrayYTVideoIds", arrayYTVideoIds);
             player.loadPlaylist(arrayYTVideoIds);
             localStorage.setItem("saved-content", JSON.stringify(arrayYTVideoIds));
             var example = localStorage.getItem("saved-content");
-            console.log(example);
-            var savedContent = (text) => {
-                var savedButton = document.createElement("button");
-                savedButton.setAttribute("data-playlist", text);
-                savedButton.innerHTML = "Last Playlist";
-                savedContentList.appendChild(savedButton);
-                savedButton.addEventListener('click', function () {
-                    alert(this.getAttribute("data-playlist"));
-                    getYoutubeContent2(this.getAttribute("data-playlist"));
-                    console.log(savedButton);
-                })
-            };
-            savedContent(example);
+
+            //*****************
+            // SEANC: 11/2/2022: THIS WAS INTENDED FOR MULTI-ENTRY HISTORY
+            // OF VIDEO PLAYLISTS  TO BE RETRIEVABLE FROM LOCALSTORAGE
+            // ****************
+            // var savedContent = (text) => {
+            //     var savedButton = document.createElement("button");
+            //     savedButton.setAttribute("data-playlist", text);
+            //     savedButton.innerHTML = "Last Playlist";
+            //     savedContentList.appendChild(savedButton);
+            //     savedButton.addEventListener('click', function () {
+            //         //alert(this.getAttribute("data-playlist"));
+            //         getYoutubeContent2();
+            //         // console.log(savedButton);
+            //     })
+            // };
+            // savedContent(example);
         });
 };
 
-// fetch youtube content when selecting to view from previous selections
-function getYoutubeContent2(value) {
-    var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
-    fetch(queryUrl)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            alert(value);
-            getFeelsResultYT = data;
-            for (var i = 0; i < getFeelsResultYT.items.length; i++) {
-                var vid = getFeelsResultYT.items[i];
-                console.log("vidID:", vid.id.videoId);
-                arrayYTVideoIds.push(vid.id.videoId);
-            }
-            console.log("arrayYTVideoIds", arrayYTVideoIds);
-            player.loadPlaylist(arrayYTVideoIds);
-        });
-};
+savedButton.addEventListener('click', function () {
+    getYoutubeContent2();
+});
+
+function getYoutubeContent2() {
+    savedContent = JSON.parse(localStorage.getItem("saved-content"),);
+    player.loadPlaylist(savedContent);
+}
+
+//************
+//This was intended to recall the API and play a specified playlist, however oit was simplified above without having to fetch again
+//************
+// function getYoutubeContent2(value) {
+//     var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
+//     fetch(queryUrl)
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (data) {
+//             console.log(data);
+//             alert(value);
+//             getFeelsResultYT = data;
+//             for (var i = 0; i < getFeelsResultYT.items.length; i++) {
+//                 var vid = getFeelsResultYT.items[i];
+//                 console.log("vidID:", vid.id.videoId);
+//                 arrayYTVideoIds.push(vid.id.videoId);
+//             }
+//             console.log("arrayYTVideoIds", arrayYTVideoIds);
+//             player.loadPlaylist(arrayYTVideoIds);
+//         });
+// };
 
 //Youtube API player code
 var tag = document.createElement('script');
@@ -130,19 +143,6 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// function onYouTubePlayerAPIReady(arrayYTVideoIds) 
-// {
-//         player = new YT.Player('player', 
-//         {
-//           height: '390',
-//           width: '640',
-//           playerVars: 
-//           {
-//             listType:'playlist',
-//             list: arrayYTVideoIds
-//           }
-//         });
-// }
 
 //End of youtube API code
 
@@ -169,7 +169,6 @@ mixcloudButtonEl.addEventListener("click", (event) => {
 
 // mixcloud web fetch
 function getMixcloudContent(value) {
-    console.log("mixcloud VALUE passed:", value)
     var queryUrl = `https://api.mixcloud.com/discover/${value}/latest/`;
 
     fetch(queryUrl)
@@ -177,22 +176,17 @@ function getMixcloudContent(value) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
 
             getMixcloudResults = data.data;
-            console.log("mixCloud", getMixcloudResults)
 
             //clear array of video keys to avoid duplications, etc
             arrayMixcloudKeys = [];
 
             for (var i = 0; i < getMixcloudResults.length; i++) {
                 var key = getMixcloudResults[i].key;
-                console.log("key:", key);
                 arrayMixcloudKeys.push(key);
             }
             arrayMixcloudKeys = [...arrayMixcloudKeys].sort(() => 0.5 - Math.random());
-            console.log("arrayMixcloudKeys", arrayMixcloudKeys);
-            // player.loadPlaylist(arrayYTVideoIds);
 
             // load new Mixcloud selection
             loadMixcloudSelection(arrayMixcloudKeys)
@@ -203,10 +197,6 @@ function loadMixcloudSelection(arrayOfTracks) {
 
     // get first element and remove it from the arrayOfTracks
     var track = arrayOfTracks.shift();
-
-    console.log("track", track);
-    console.log("arrayOfTracks", arrayOfTracks);
-    console.log("trackUrl", trackUrl);
 
     //drop any existing widget from the mixcloudPlayerEl parent
     var currentIFrame = document.getElementById('mx-iframe');
@@ -228,3 +218,34 @@ function loadMixcloudSelection(arrayOfTracks) {
     //attach new widget
     mixcloudPlayerEl.append(widgetIFrame);
 }
+
+
+
+//***********
+//Attempted OMDB API fetch, did not function as intended and was removed from final product. Credit: Kellen Kittrell
+//***********
+// let apiKey = 'efa1cce';
+// let happy = 'clueless';
+// let e = document.getElementById('title');
+// let b = document.getElementById('search');
+// let searchFormEl = document.getElementById('search-form');
+// function fubar(URL){
+// fetch(URL)
+//     .then(function (res) {
+//         console.log(res.ok);
+//        return res.json();
+//     })
+//     .then(function (data) {
+//         console.log('data');
+//         console.log(data);
+//     });
+// }
+// searchFormEl.addEventListener("submit", function () {
+
+//     let userInput = e.value;
+//     let query = 'http://www.omdbapi.com/?s=' + userInput + '&apikey=efa1cce';
+//     fubar(query);
+//     console.log(userInput);
+//     console.log(query);
+
+// });
