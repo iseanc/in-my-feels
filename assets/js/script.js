@@ -51,7 +51,7 @@ function getYoutubeContent(value) {
             player.loadPlaylist(arrayYTVideoIds);
             localStorage.setItem("saved-content", JSON.stringify(arrayYTVideoIds));
             var example = localStorage.getItem("saved-content");
-            
+
             //*****************
             // SEANC: 11/2/2022: THIS WAS INTENDED FOR MULTI-ENTRY HISTORY
             // OF VIDEO PLAYLISTS  TO BE RETRIEVABLE FROM LOCALSTORAGE
@@ -71,16 +71,19 @@ function getYoutubeContent(value) {
         });
 };
 
+
 savedButton.addEventListener('click', function () {
     getYoutubeContent2();
 });
 
 function getYoutubeContent2() {
-    savedContent = JSON.parse(localStorage.getItem("saved-content"), );
+    savedContent = JSON.parse(localStorage.getItem("saved-content"),);
     player.loadPlaylist(savedContent);
 }
 
-// fetch youtube content when selecting to view from previous selections
+//************
+//This was intended to recall the API and play a specified playlist, however oit was simplified above without having to fetch again
+//************
 // function getYoutubeContent2(value) {
 //     var queryUrl = `https://www.googleapis.com/youtube/v3/search?key=${ytAPIkey}&q=${value}&videoEmbeddable=${videoEmbed}&videoLicense=${videoLicenseType}&type=${ytSearchType}&maxResults=${maxResults}`;
 //     fetch(queryUrl)
@@ -141,19 +144,6 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// function onYouTubePlayerAPIReady(arrayYTVideoIds) 
-// {
-//         player = new YT.Player('player', 
-//         {
-//           height: '390',
-//           width: '640',
-//           playerVars: 
-//           {
-//             listType:'playlist',
-//             list: arrayYTVideoIds
-//           }
-//         });
-// }
 
 //End of youtube API code
 
@@ -229,3 +219,34 @@ function loadMixcloudSelection(arrayOfTracks) {
     //attach new widget
     mixcloudPlayerEl.append(widgetIFrame);
 }
+
+
+
+//***********
+//Attempted OMDB API fetch, did not function as intended and was removed from final product. Credit: Kellen Kittrell
+//***********
+// let apiKey = 'efa1cce';
+// let happy = 'clueless';
+// let e = document.getElementById('title');
+// let b = document.getElementById('search');
+// let searchFormEl = document.getElementById('search-form');
+// function fubar(URL){
+// fetch(URL)
+//     .then(function (res) {
+//         console.log(res.ok);
+//        return res.json();
+//     })
+//     .then(function (data) {
+//         console.log('data');
+//         console.log(data);
+//     });
+// }
+// searchFormEl.addEventListener("submit", function () {
+
+//     let userInput = e.value;
+//     let query = 'http://www.omdbapi.com/?s=' + userInput + '&apikey=efa1cce';
+//     fubar(query);
+//     console.log(userInput);
+//     console.log(query);
+
+// });
