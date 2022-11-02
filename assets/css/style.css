@@ -2,6 +2,15 @@
   font-family: 'Gemunu Libre', sans-serif;
 }
 
+body {
+  background-color: white;
+  background-image: url(https://thumbs.gfycat.com/AngelicDapperAiredale-size_restricted.gif);
+  background-image: no-repeat center center fixed;
+  background-size: 1920px 1080px;
+  background-attachment: fixed;
+  color: black;
+}
+
 h1 {
   text-align: center;
   padding-left: 150px;
@@ -31,8 +40,9 @@ h2 {
 }
 
 #dropdown {
-  padding-left: 400px;
-  padding-right: 400px;
+  padding-left: 40%;
+  padding-right: 40%;
+  color: black;
 }
 
 #mood-button-position {

@@ -25,6 +25,19 @@ moodForm.addEventListener("submit", (event) => {
     var value = moodSelection.value;
     var text = moodSelection.options[moodSelection.selectedIndex].text;
 
+    if(text === "Happy") {
+        console.log("1");
+        bImageH ()
+    }
+    else if(text === "Sad") {
+        console.log("2");
+        bImageS ()
+    }
+    else if(text === "Angry"){
+        console.log("3");
+        bImageA ()
+    }
+
     event.preventDefault();
     // fetch YouTube content
     getYoutubeContent(value);
@@ -250,3 +263,18 @@ function loadMixcloudSelection(arrayOfTracks) {
 //     console.log(query);
 
 // });
+
+function bImageH () {
+    document.getElementById("myDivs").style.backgroundImage = "url(https://media.tenor.com/-yipKLrg9s0AAAAC/weather-natue.gif)";
+    document.getElementById("myDivs").style.color = "black";
+}
+
+function bImageS () {
+    document.getElementById("myDivs").style.backgroundImage = "url(https://media2.giphy.com/media/l3vRbNFMuFt5Zm372/giphy.gif)";
+    document.getElementById("myDivs").style.color = "black";
+}
+
+function bImageA () {
+    document.getElementById("myDivs").style.backgroundImage = "url(https://media.tenor.com/CMUmM15Pdk8AAAAd/ghost-forest.gif)";
+    document.getElementById("myDivs").style.color = "white";
+}
