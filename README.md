@@ -88,11 +88,7 @@ You can click on the Youtube video or song widget to play either content. You ca
 
 You can access your last Youtube playlist by clicking on the "Last Playlist" button that appears under "Saved content." Then you will be presented with your last search, starting the playlist from the top.
 
-![last playlist](./assets/images/last-playlist.png)
-
 If you want another random playlist in your pre-selected mood or new mood, simply select a new mood from the dropdwon list and click "Get In Your Feels" and you will see another completely random playlist generated.
-
-![new playlist](./assets/images/new-playlist.png)
 
 ## Credits
 
