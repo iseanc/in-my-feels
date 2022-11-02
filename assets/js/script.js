@@ -10,7 +10,7 @@ var movieList = document.getElementById("movie-list");
 var ytAPIkey = "AIzaSyD8nsKtJy1r4v8Cn0l0CY6kRVXl9ARsrjg";
 
 var initialVideoID = 'M7lc1UVf-VE';
-var maxResults = 2;
+var maxResults = 10;
 var videoLicenseType = "creativeCommon"
 var videoEmbed = true;
 var ytSearchType = "video";
